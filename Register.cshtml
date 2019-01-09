@@ -1,0 +1,37 @@
+﻿@model MVCEventCalendar.Models.Users
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="login-popup-heading">
+    <h4><i class="fa fa-lock" aria-hidden="true"></i> Register </h4>
+</div>
+<div style="color:orangered">@ViewBag.Error</div>
+@using (Html.BeginForm("LoginUser", "Public", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="ln">ID</label>
+        @Html.TextBoxFor(m => m.ID, new { Class = "form-control" })
+        <div style="color:red">@Html.ValidationMessageFor(x => x.ID)</div>
+    </div>
+    <div class="form-group">
+        <label for="ln">Passworld</label>
+        @Html.TextBoxFor(m => m.passworld, new { Class = "form-control" })
+        <div style="color:red">@Html.ValidationMessageFor(x => x.passworld)</div>
+
+    </div>
+    <div class="form-group">
+        <label for="ln">Email</label>
+        @Html.TextBoxFor(m => m.email, new { Class = "form-control" })
+        <div style="color:red">@Html.ValidationMessageFor(x => x.email)</div>
+
+    </div>
+    <input id="Submit1" type="submit" class="btn btn-success" value="Go to LogIn" />
+}
+
+
