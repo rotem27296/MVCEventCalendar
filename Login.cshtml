@@ -1,0 +1,76 @@
+﻿@model MVCEventCalendar.Models.Users
+
+@{
+    ViewBag.Title = "Login";
+}
+<style>
+    .login-popup-heading > h4 {
+        color: #258b47;
+        font-size: 18px;
+        line-height: 30px;
+    }
+
+    .new_reg_popup, .new_login_popup {
+
+        border-radius: 2px;
+        min-height: 332px;
+        width: 500px;
+        margin: 0px auto;
+
+    }
+
+    .login-popup-btn {
+        background: #258b47;
+        border: none;
+        border-radius: 25px;
+        color: #fff;
+        display: block;
+        font-size: 18px;
+        height: 38px;
+        line-height: 28px;
+        margin: 20px auto 5px;
+        width: 150px;
+        -webkit-transition: all 700ms ease;
+        -moz-transition: all 700ms ease;
+        -ms-transition: all 700ms ease;
+        -o-transition: all 700ms ease;
+    }
+
+    a {
+        color: #258b47;
+        font-size: 18px;
+    }
+</style>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="login-popup-wrap new_login_popup">
+    <div class="login-popup-heading text-center">
+        <h4><i class="fa fa-lock" aria-hidden="true"></i> Login </h4>
+    </div>
+    <div style="color:orangered">@ViewBag.Error</div>
+    @using (Html.BeginForm("CheckLogin", "Public", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label for="ln">ID</label>
+            @Html.TextBoxFor(m => m.ID, new { Class = "form-control" })
+            <div style="color:red">@Html.ValidationMessageFor(x => x.ID)</div>
+        </div>
+        <div class="form-group">
+            <label for="ln">Passworld</label>
+            @Html.TextBoxFor(m => m.passworld, new { Class = "form-control" })
+            <div style="color:red">@Html.ValidationMessageFor(x => x.passworld)</div>
+
+        </div>
+        <input id="Submit1" type="submit" class="btn btn-success" value="Login" />
+        //<button type="button" onclick="location.href='@Url.Action("Register", "Public")'">Register</button>
+        //<button type="button" onclick="location.href='@Url.Action("Reset", "Public")'">Reset Password</button>
+
+    }
+    <div class="form-group text-center">
+        <a class="pwd-forget" href="@Url.Action("Reset", "Public")" id="open_forgotPassword">Forget Password</a>
+    </div>
+    <div class="text-center">Not registered yet?<a href="@Url.Action("Register", "Public")">click here</a></div>
+</div>
