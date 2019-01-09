@@ -1,0 +1,24 @@
+﻿@model MVCEventCalendar.Models.Users
+@{
+    ViewBag.Title = "Reset";
+}
+
+<h2>Reset</h2>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<div style="color:orangered">@ViewBag.Error</div>
+@using (Html.BeginForm("resetPassword", "Admin", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="ln">ID</label>
+        @Html.TextBoxFor(m => m.ID, new { Class = "form-control" })
+        <div style="color:red">@Html.ValidationMessageFor(x => x.ID)</div>
+    </div>
+   
+    <input id="Submit1" type="submit" class="btn btn-success" value="Validation" />
+    <button type="button" onclick="location.href='@Url.Action("Login", "Public")'">Login</button>
+
+}
+
