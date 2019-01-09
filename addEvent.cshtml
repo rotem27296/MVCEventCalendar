@@ -1,0 +1,155 @@
+﻿@model MVCEventCalendar.Models.EventClient
+@using MVCEventCalendar.Models
+
+
+@{
+    ViewBag.Title = "addEvent";
+}
+
+<h2>addEvent</h2>
+
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+<br>
+<br>
+
+@using (Html.BeginForm("addEventSubmit", "Home", FormMethod.Post, new { id = "frmAdd" }))
+{
+    <div class="form-group">
+        <label for="ID">Subject</label>
+
+        @Html.TextBoxFor(model => model.Event.Subject, new { Class = "form-control" })
+        <div style="color:red">@Html.ValidationMessageFor(x => x.Event.Subject)</div>
+    </div>
+    <div class="form-group">
+        <label for="ID">Description</label>
+        @Html.TextBoxFor(model => model.Event.Description, new { Class = "form-control" })
+        <div style="color:red">@Html.ValidationMessageFor(x => x.Event.Description)</div>
+    </div>
+    <div class="form-group">
+        <label for="ID">Start</label>
+        @Html.TextBoxFor(model => model.Event.Start, new { Class = "form-control", type = "datetime-local" })
+        <div style="color:red">@Html.ValidationMessageFor(x => x.Event.Start)</div>
+    </div>
+    <div class="form-group">
+        <label for="ID">End</label>
+        @Html.TextBoxFor(model => model.Event.End, new { Class = "form-control", type = "datetime-local" })
+        <div style="color:red">@Html.ValidationMessageFor(x => x.Event.End)</div>
+    </div>
+    <div class="form-group">
+        <label for="ID">Location</label>
+        @Html.TextBoxFor(model => model.Event.Location, new { Class = "form-control" })
+        <div style="color:red">@Html.ValidationMessageFor(x => x.Event.Location)</div>
+    </div>
+
+    <div class="form-group">
+        <!--<label for="exampleFormControlSelect1">Color</label>
+        <select class="form-control"  name="ThemeColor">
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="pink">Pink</option>
+
+        </select>-->
+        <label for="ID">Color</label>
+        <input type="color" name="ThemeColor" value="#ff0000">
+        <div style="color:red">@Html.ValidationMessageFor(x => x.Event.ThemeColor)</div>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">FullDays</label>
+        <select class="form-control" name="IsFullDay">
+            <option value="true">Yes</option>
+            <option value="false" selected>No</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlSelect2">Choose Client</label>
+        <select multiple class="form-control" id="exampleFormControlSelect2" name="Clients">
+
+            @if (Model.UsersList != null)
+            {
+                foreach (Users user in Model.UsersList)
+                {
+
+                    <option value="@user.ID"> @user.ID </option>
+                }
+            }
+
+        </select>
+    </div>
+    <input id="Submit" type="submit" class="btn btn-success" value="Add Event" />
+
+
+}
+
+
+<script>
+    $("#ID").change(function () {
+        var regex1 = RegExp('^[0-9]{8}$');
+        var a = regex1.test($("#ID").val());
+        if (a) {
+            document.getElementById("Submit").disabled = false;
+        }
+    });
+    document.querySelector("#frmAdd").addEventListener("submit", function (e) {
+        var regex1 = RegExp('^[0-9]{8}$');
+        var a = regex1.test($("#ID").val());
+        if (!a)
+            ;
+        else
+            sendData();
+    });
+
+    function delete_users(name) {
+        if (confirm('Are you sure you want to delete this thing into the database?'))
+            $.post("DeleteUsers", "ID=" + name, restart);
+    }
+    function reset_pass(id) {
+        $.post("resetPassword", "ID=" + id);
+    }
+    $("#statue").text("Loading data...");
+    function restart() {
+        $.get("getUsersByJson", null, bindData);
+    }
+    restart();
+    function bindData(users) {
+        $("#custUsers").find("tr:gt(0)").remove();
+        var tbl = $("#custUsers");
+        for (k = 0; k < users.length; k++) {
+            var type;
+            if (users[k].type == 0) type = "user";
+            if (users[k].type == 1) type = "Food Admin";
+            if (users[k].type == 2) type = "Service Admin";
+            if (users[k].type != 3) {
+                var newR =
+                    "<tr>" +
+                    "<td>" + users[k].ID + "</td>" +
+                    "<td>" + users[k].passworld + "</td>" +
+                    "<td>" + type + "</td>" +
+                    "<td>" + users[k].email + "</td>" +
+                    "<td><button onclick=\"delete_users('" + users[k].ID + "')\">delete</button></td>" +
+                    "<td><button onclick=\"reset_pass('" + users[k].ID + "')\">reset_pass</button></td>" +
+                    " </tr>";
+                tbl.append(newR);
+            }
+        }
+        $("#statue").text("");
+    }
+
+    function sendData() {
+
+        var frmData = $("#frmAdd").serialize();
+        $.post("SubmitUser", frmData, restart);
+        $("#name").val("");
+        $("#price").val("");
+
+
+
+    }
+
+</script>
