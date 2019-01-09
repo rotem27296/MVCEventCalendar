@@ -1,0 +1,18 @@
+﻿
+
+@{
+    ViewBag.Title = "NotLogged";
+}
+
+
+<div class=row>
+
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>@ViewBag.Error</strong>
+        <br />
+        @Html.ActionLink("Press here to be redirected to login page", "Login", "Public")
+    </div>
+    <div>
+    </div>
+</div>
