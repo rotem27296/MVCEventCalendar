@@ -59,8 +59,8 @@
             <div style="color:red">@Html.ValidationMessageFor(x => x.ID)</div>
         </div>
         <div class="form-group">
-            <label for="ln">Passworld</label>
-            @Html.TextBoxFor(m => m.passworld, new { Class = "form-control" })
+            <label for="ln">Password</label>
+            @Html.TextBoxFor(m => m.passworld, new { type= "password",Class = "form-control" })
             <div style="color:red">@Html.ValidationMessageFor(x => x.passworld)</div>
 
         </div>
