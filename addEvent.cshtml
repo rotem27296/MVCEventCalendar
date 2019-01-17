@@ -23,7 +23,7 @@
     <div class="form-group">
         <label for="ID">Subject</label>
 
-        @Html.TextBoxFor(model => model.Event.Subject, new { Class = "form-control" })
+        @Html.TextBoxFor(model => model.Event.Subject, new { Class = "form-control", onkeyup = "stoppedTyping()"})
         <div style="color:red">@Html.ValidationMessageFor(x => x.Event.Subject)</div>
     </div>
     <div class="form-group">
@@ -82,13 +82,20 @@
 
         </select>
     </div>
-    <input id="Submit" type="submit" class="btn btn-success" value="Add Event" />
+    <input id="Submit" type="submit" class="btn btn-success" value="Add Event" disabled/>
 
 
 }
 
 
 <script>
+    function stoppedTyping() {
+        if (document.getElementById("Event_Subject").value.length > 0) {
+            document.getElementById('Submit').disabled = false;
+        } else {
+            document.getElementById('Submit').disabled = true;
+        }
+    }
     $("#ID").change(function () {
         var regex1 = RegExp('^[0-9]{8}$');
         var a = regex1.test($("#ID").val());
